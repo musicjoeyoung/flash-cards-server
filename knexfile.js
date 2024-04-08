@@ -10,3 +10,4 @@ export default {
         charset: "utf8",
     },
 };
+
