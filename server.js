@@ -18,44 +18,6 @@ app.get("/", (req, res) => {
 app.use(express.json())
 app.use(cors())
 
-/* -------------------------------------------------------------------------- */
-/*         Function to extact the token from the Authorization header         */
-/* -------------------------------------------------------------------------- */
-/* function getToken(req) {
-    if (!req.headers.authorization) {
-        return;
-    } else {
-        return req.headers.authorization.split(" ")[1];
-    }
-} */
-
-/* -------------------------------------------------------------------------- */
-/*            Middleware to check for valid JWT on protected routes           */
-/* -------------------------------------------------------------------------- */
-
-/* app.use((req, res, next) => {
-    if (req.url === '/login' || req.url === '/register') {
-        next()
-    } else {
-        const token = getToken(req);
-
-        if (token) {
-            console.log("Auth Token:", token);
-            if (jwt.verify(token, process.env.JWT_SECRET)) {
-                req.decode = jwt.decode(token)
-                next();
-            } else {
-                res.status(403).json({ error: "Not Authorized" })
-
-            }
-        } else {
-            res.status(403).json({ error: "No token. Not Authorized" })
-
-        }
-    }
-}) */
-
-
 app.use("/register", registerRoutes)
 app.use("/login", loginRoutes)
 app.use("/array-methods", arrayRoutes)

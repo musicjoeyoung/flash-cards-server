@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
     if (!email || !username || !password) {
         console.error("Please fill in all fields")
         res.status(400).send("Please fill in all fields");
+        return;
     }
 
     try {
@@ -21,16 +22,23 @@ router.post('/', async (req, res) => {
         res.json(results)
     } catch (error) {
         console.error('Database query failed:', error);
+
         if (error.code === 'ER_DUP_ENTRY') {
-            console.error('Email already exists in the database');
-            res.status(400).send('Email already exists');
+            if (error.sqlMessage.includes('users.users_email_unique')) {
+                console.error('Email already exists in the database');
+                res.status(400).send('Email already exists');
+            } else if (error.sqlMessage.includes('users.users_username_unique')) {
+                console.error('Username already exists in the database');
+                res.status(400).send('Username already exists');
+            } else {
+                console.error('Duplicate entry but not email or username');
+                res.status(400).send('Duplicate entry detected');
+            }
         } else {
             console.error('Database query failed:', error);
             res.status(500).send('Error fetching data');
         }
     }
-
-}
-)
+});
 
 export default router;
