@@ -1,3 +1,4 @@
+//add the other endpoints to this document with their responses
 const htmlResponse = `
 <!DOCTYPE html>
 <html lang="en">
@@ -56,6 +57,17 @@ const htmlResponse = `
     ]
 }</pre>
         </div>
+    </div>
+        <div class="endpoint">
+        <div class="method">POST</div>
+        <div class="path">/register</div>
+        <div class="description">Registers a user with email, username, & password.</div>
+    </div>
+
+     <div class="endpoint">
+        <div class="method">POST</div>
+        <div class="path">/login</div>
+        <div class="description">User login with email & password.</div>
     </div>
 </body>
 </html>

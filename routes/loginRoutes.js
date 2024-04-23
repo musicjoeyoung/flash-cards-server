@@ -16,7 +16,10 @@ router.post("/", async (req, res) => {
         if (results.length > 0) {
             const user = results[0];
             if (await bcrypt.compare(password, user.password)) {
-                const accessToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '15m' });
+                const accessToken = jwt.sign(
+                    { userId: user.id, email: user.email },
+                    process.env.JWT_SECRET,
+                    { expiresIn: '1h' });
                 res.json({ accessToken });
             } else {
                 res.status(403).send("Invalid password");
@@ -30,5 +33,6 @@ router.post("/", async (req, res) => {
     }
 }
 )
+
 
 export default router;

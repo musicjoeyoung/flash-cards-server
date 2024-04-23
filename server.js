@@ -7,6 +7,7 @@ import registerRoutes from "./routes/registerRoutes.js"
 import arrayRoutes from "./routes/arrayRoutes.js"
 import objectRoutes from "./routes/objectRoutes.js"
 import algosRoutes from "./routes/algosRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
 import cors from "cors"
 import serverResponse from "./serverResponse.js"
 
@@ -20,6 +21,7 @@ app.use(cors())
 
 app.use("/register", registerRoutes)
 app.use("/login", loginRoutes)
+app.use("/users", userRoutes)
 app.use("/array-methods", arrayRoutes)
 app.use("/object-methods", objectRoutes)
 app.use("/algos-methods", algosRoutes)

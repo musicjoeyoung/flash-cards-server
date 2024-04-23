@@ -12,6 +12,7 @@ const authorize = (req, res, next) => {
             return res.status(401).send("Invalid token")
         }
         req.decoded = decoded;
+        console.log("Decoded: ", decoded)
         next();
     })
 }

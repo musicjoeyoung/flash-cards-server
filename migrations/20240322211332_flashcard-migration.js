@@ -9,6 +9,7 @@ export async function up(knex) {
         table.string('password').notNullable();
         table.string('email').notNullable().unique();
     });
+
     await knex.schema.createTable('array_methods', (table) => {
         table.increments('id').primary();
         table.string('name');
