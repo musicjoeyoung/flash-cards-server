@@ -68,7 +68,8 @@ router.delete("/:id", authorize, async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        res.status(500).send("Error deleting card");
     }
 })
 export default router;

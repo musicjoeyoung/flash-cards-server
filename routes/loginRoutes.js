@@ -21,6 +21,8 @@ router.post("/", async (req, res) => {
                     process.env.JWT_SECRET,
                     { expiresIn: '1h' });
                 res.json({ accessToken });
+                const size = Buffer.byteLength(accessToken, 'utf8');
+                console.log(`JWT size: ${size} bytes`);
             } else {
                 res.status(403).send("Invalid password");
             }
