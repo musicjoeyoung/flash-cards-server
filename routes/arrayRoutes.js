@@ -1,7 +1,7 @@
+import authorize from "../middleware/jwt_authorize.js"
+import db from "../db.js"
 import express from "express"
 const router = express.Router();
-import db from "../db.js"
-import authorize from "../middleware/jwt_authorize.js"
 
 //refactor this later. "/nologin" seems kind of ridiculous. Do I need a separate GET for when someone is not logged in??
 //Add some Boolean logic inside of the authorization and then combine the two GETs into one. If they are logged in, give them the user_id data. If they are not logged in, give them the data with the user_id of null.
@@ -37,25 +37,33 @@ router.post("/", authorize, async (req, res) => {
     const { name, definition, code } = req.body;
 
     if (!name || !definition || !code) {
-        console.error("Please fill in all fields")
-        res.status(400).send("Please fill in all fields");
+        console.error("Please fill in all fields");
+        return res.status(400).send("Please fill in all fields");
     }
 
     try {
-        const results = await db('array_methods').insert({
+        const [newFlashcardId] = await db('array_methods').insert({
             name,
             definition,
             code,
             user_id: req.decoded.userId
-        });
-        res.json(results)
+        }).returning('id'); //returns the inserted ID--without this, the response would be empty
+
+        const createdFlashcard = {
+            id: newFlashcardId,
+            name,
+            definition,
+            code,
+            user_id: req.decoded.userId
+        };
+
+        res.json(createdFlashcard); //returns the full flashcard--without this, the response would be empty and the client would not have the ID. This was preventing me from deleting a new ENTRY immediately after it was created (without have to refresh to the browser to produce the ID)
     } catch (error) {
         console.error('Database query failed:', error);
-        res.status(500).send("Error fetching data");
+        res.status(500).send("Error adding flashcard");
     }
+});
 
-}
-)
 
 router.delete("/:id", authorize, async (req, res) => {
     const { id } = req.params;

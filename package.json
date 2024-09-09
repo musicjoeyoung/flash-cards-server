@@ -5,7 +5,7 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "dotenvx run -- node --watch server.js",
+    "start": "dotenvx run -- bun --watch server.js",
     "migrate": "npx knex migrate:latest",
     "migrate:down": "npx knex migrate:down",
     "migrate:rollback": "npx knex migrate:rollback",
