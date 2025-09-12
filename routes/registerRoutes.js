@@ -1,7 +1,7 @@
+import bcrypt from "bcryptjs"
+import db from "../db.js"
 import express from "express"
 const router = express.Router();
-import db from "../db.js"
-import bcrypt from "bcrypt"
 
 router.post('/', async (req, res) => {
     const { email, username, password } = req.body;
